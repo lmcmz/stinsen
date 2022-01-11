@@ -35,70 +35,75 @@ struct TabCoordinatableView<T: TabCoordinatable, U: View>: View {
     var body: some View {
         customize(
             AnyView(
-//                TabView(selection: $child.activeTab) {
-//                    ForEach(Array(views.enumerated()), id: \.offset) { view in
-//                        view
-//                            .element
-//                            .tabItem {
-//                                coordinator.child.allItems[view.offset].tabItem(view.offset == child.activeTab)
-//                            }
-//                            .tag(view.offset)
-//                    }
-//                }
-                
-                ZStack(alignment: .bottom) {
-                    OffsetPageTabView(offset: $offset, scrollTo: $scrollTo) {
-                        ForEach(Array(views.enumerated()), id: \.offset) { view in
-                            view.element.tag(view.offset)
-                        }
+                TabView(selection: $child.activeTab) {
+                    ForEach(Array(views.enumerated()), id: \.offset) { view in
+                        view
+                            .element
+                            .tabItem {
+                                coordinator.child.allItems[view.offset].tabItem(view.offset == child.activeTab)
+                            }
+                            .tag(view.offset)
                     }
-                    .background(Color.black.edgesIgnoringSafeArea(.all))
-                    .mask {
-                        Rectangle()
-                            .cornerRadius(20, antialiased: true)
-//                            .cornerRadius([.bottomLeading, .bottomTrailing], 20)
-                            .offset(y: -50)
-        //                    .foregroundColor(.red)
-        //                    .cornerRadius([.bottomLeft, .bottomRight], 20)
-                    }
-                    
-                    HStack(spacing: 0) {
-                        
-                        ForEach(Array(views.enumerated()), id: \.offset) { view in
-                            Button {
-                                withAnimation(.tabSelection) {
-                                    scrollTo = screenWidth * CGFloat(view.offset)
-                                }
-                            } label: {
-                                Image(systemName: currentIndex == view.offset ? "die.face.1.fill" : "die.face.1")
-                                    .frame(maxWidth: .infinity, alignment: .center)
-        //                            .height(30)
-                                    .background(Color.black)
-                                    .padding(.vertical, 26)
-                                    .foregroundColor(Color.gray)
-        //                            .background(Color.green)
-                            }.contextMenu(menuItems: {
-                                Text("Action 1")
-                                Text("Action 2")
-                            })
-                        }
-                    }
-                    .overlay(
-                        Rectangle()
-                            .frame(width: 28, height: 4)
-                            .cornerRadius(3)
-        //                    .frame(width: 88)
-                        
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                            .offset(x: indicatorOffset)
-        //                    .foregroundColor(color)
-        //                    .blendMode(.)
-                    )
-                    .padding(.horizontal, 20)
-                    .frame(width: screenWidth, height: 30, alignment: .center)
-                    .background()
                 }
-                    .background(Color.black)
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                
+//                ZStack(alignment: .bottom) {
+//                    OffsetPageTabView(offset: $offset, scrollTo: $scrollTo) {
+//                        ForEach(Array(views.enumerated()), id: \.offset) { view in
+//                            view.element
+//                                .tabItem {
+//                                    coordinator.child.allItems[view.offset].tabItem(view.offset == child.activeTab)
+//                                }
+//                                .tag(view.offset)
+//                        }
+//                    }
+//                    .background(Color.black.edgesIgnoringSafeArea(.all))
+//                    .mask {
+//                        Rectangle()
+//                            .cornerRadius(20, antialiased: true)
+////                            .cornerRadius([.bottomLeading, .bottomTrailing], 20)
+//                            .offset(y: -50)
+//        //                    .foregroundColor(.red)
+//        //                    .cornerRadius([.bottomLeft, .bottomRight], 20)
+//                    }
+//
+//                    HStack(spacing: 0) {
+//
+//                        ForEach(Array(views.enumerated()), id: \.offset) { view in
+//                            Button {
+//                                withAnimation(.tabSelection) {
+//                                    scrollTo = screenWidth * CGFloat(view.offset)
+//                                }
+//                            } label: {
+//                                Image(systemName: currentIndex == view.offset ? "die.face.1.fill" : "die.face.1")
+//                                    .frame(maxWidth: .infinity, alignment: .center)
+//        //                            .height(30)
+//                                    .background(Color.black)
+//                                    .padding(.vertical, 26)
+//                                    .foregroundColor(Color.gray)
+//        //                            .background(Color.green)
+//                            }.contextMenu(menuItems: {
+//                                Text("Action 1")
+//                                Text("Action 2")
+//                            })
+//                        }
+//                    }
+//                    .overlay(
+//                        Rectangle()
+//                            .frame(width: 28, height: 4)
+//                            .cornerRadius(3)
+//        //                    .frame(width: 88)
+//
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+//                            .offset(x: indicatorOffset)
+//        //                    .foregroundColor(color)
+//        //                    .blendMode(.)
+//                    )
+//                    .padding(.horizontal, 20)
+//                    .frame(width: screenWidth, height: 30, alignment: .center)
+//                    .background()
+//                }
+//                    .background(Color.black)
                 
             )
         )
